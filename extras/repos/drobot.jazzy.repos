@@ -9,7 +9,7 @@ repositories:
     url: https://github.com/IOES-Lab/rocker.git
     version: main
 
-  dave:
+  Drobot:
     type: git
     url: https://github.com/GauravKumar9920/Drobot.git
     version: main
