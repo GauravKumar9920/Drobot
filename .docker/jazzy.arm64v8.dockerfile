@@ -104,10 +104,14 @@ RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pk
     libgz-sim8-dev rapidjson-dev libopencv-dev libasio-dev \
     gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-gl \
     && rm -rf /var/lib/apt/lists/
+
+RUN apt-get update && apt-get install -y python3-colcon-common-extensions
 # Install mavros
-ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
-extras/mavros-ubuntu-install.sh install.sh
-RUN bash install.sh
+# ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
+# extras/mavros-ubuntu-install.sh install.sh
+
+# ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/main/extras/mavros-ubuntu-install.sh install.sh
+# RUN bash install.sh
 
 # Download the background image from GitHub raw content URL
 # hadolint ignore=DL3047
