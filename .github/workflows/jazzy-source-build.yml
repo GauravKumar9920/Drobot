@@ -88,7 +88,7 @@ jobs:
             ${{ env.path }}/extras/repos/dave.${{ env.ros_distro }}.repos
           colcon-mixin-repository:
             https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
-      - uses: actions/upload-artifact@v4.3.3
+      - uses: actions/upload-artifact@v4.4.3
         with:
           name: colcon-logs-${{ env.os_name }}-${{ env.ros_distro }}
           path: ros_ws/log
