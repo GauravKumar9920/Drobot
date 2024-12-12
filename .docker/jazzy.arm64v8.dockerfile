@@ -129,9 +129,9 @@ RUN chmod +x /tmp/install.sh && bash /tmp/install.sh
 # Set up Drobot workspace
 ENV DROBOT_UNDERLAY=/home/$USER/drobot_ws
 WORKDIR $DROBOT_UNDERLAY/src
-RUN wget -O /home/$USER/drobot_ws/dave.repos -q https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
-extras/repos/dave.$ROS_DISTRO.repos
-RUN vcs import --shallow --input "/home/$USER/drobot_ws/dave.repos"
+RUN wget -O /home/$USER/drobot_ws/drobot.repos -q https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
+extras/repos/drobot.$ROS_DISTRO.repos
+RUN vcs import --shallow --input "/home/$USER/drobot_ws/drobot.repos"
 
 USER root
 # hadolint ignore=DL3027
@@ -141,7 +141,7 @@ RUN apt update && apt --fix-broken install && \
     rm -rf /var/lib/apt/lists/
 USER docker
 
-# Build dave workspace
+# Build drobot workspace
 WORKDIR $DROBOT_UNDERLAY
 RUN . "/opt/ros/${ROS_DISTRO}/setup.sh" && colcon build
 
