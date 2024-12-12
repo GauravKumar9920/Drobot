@@ -105,7 +105,21 @@ RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pk
     gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-gl \
     && rm -rf /var/lib/apt/lists/
 
-RUN apt-get update && apt-get install -y python3-colcon-common-extensions
+# RUN apt-get update && apt-get install -y python3-colcon-common-extensions
+
+# Install colcon and other dependencies before running install.sh
+RUN apt-get update && apt-get install -y \
+    python3-colcon-common-extensions \
+    python3-venv \
+    build-essential \
+    wget && \
+    python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install --no-cache-dir -U pip
+
+# Add and run the install script
+ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/main/extras/mavros-ubuntu-install.sh install.sh
+RUN chmod +x install.sh && bash install.sh
+
 # Install mavros
 # ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
 # extras/mavros-ubuntu-install.sh install.sh
