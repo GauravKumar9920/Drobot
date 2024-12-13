@@ -1,0 +1,8 @@
+prepend-non-duplicate;GZ_SIM_RESOURCE_PATH;lib/@PROJECT_NAME@/
+prepend-non-duplicate;GZ_SIM_RESOURCE_PATH;lib/@PROJECT_NAME@/models
+prepend-non-duplicate;GZ_SIM_RESOURCE_PATH;lib/@PROJECT_NAME@/models/movus
+prepend-non-duplicate;GZ_SIM_RESOURCE_PATH;lib/@PROJECT_NAME@/worlds
+prepend-non-duplicate;SDF_PATH;share/@PROJECT_NAME@/models
+prepend-non-duplicate;SDF_PATH;share/@PROJECT_NAME@/worlds
+prepend-non-duplicate;GZ_SIM_FILE_PATH;share/@PROJECT_NAME@/models
+prepend-non-duplicate;GZ_SIM_FILE_PATH;share/@PROJECT_NAME@/worlds

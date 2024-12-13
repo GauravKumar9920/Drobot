@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+
+  <model name='apriltag_36h11_7'>
+    <link name='main'>
+      <pose>0 0 0 0 0 0</pose>
+      <visual name="tag_viz">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>meshes/apriltag_36h11_7.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="tag_block_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.5 0.5</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <static>1</static>
+  </model>
+
+</sdf>

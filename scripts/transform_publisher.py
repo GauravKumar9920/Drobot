@@ -25,7 +25,7 @@ class TransformPublisher(Node):
         self.odom_sub = self.create_subscription(
             Odometry, "/odometry", self.odom_cb, qos_odom
         )
-        # self.movus_pose_sub = self.create_subscription(TransformStamped, "/model/movus/pose", self.movus_pose_cb, qos_pose)
+        self.movus_pose_sub = self.create_subscription(TransformStamped, "/model/movus/pose", self.movus_pose_cb, qos_pose)
 
         self.tf_br = tf2_ros.TransformBroadcaster(self)
 
