@@ -4,6 +4,11 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.conditions import IfCondition
 from launch_ros.substitutions import FindPackageShare
+from ament_index_python.packages import get_package_share_directory
+
+
+from launch_ros.actions import Node
+
 
 
 def launch_setup(context, *args, **kwargs):
@@ -109,8 +114,18 @@ def launch_setup(context, *args, **kwargs):
             "use_sim": use_sim,
         }.items(),
     )
+    
+    # Bridge
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/model/movus/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
+                   '/model/movus/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',],
+        parameters=[{'qos_overrides./model/movus.subscriber.reliability': 'reliable'}],
+        output='screen'
+    )
 
-    include = [gz_sim_launch, robot_launch, model_launch]
+    include = [gz_sim_launch, robot_launch, model_launch, bridge]
 
     return include
 
@@ -205,5 +220,16 @@ def generate_launch_description():
             description="Flag to indicate whether to use simulation",
         ),
     ]
+    
+    # # Bridge
+    # bridge = Node(
+    #     package='ros_gz_bridge',
+    #     executable='parameter_bridge',
+    #     arguments=['/model/movus/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
+    #                '/model/movus/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',],
+    #     parameters=[{'qos_overrides./model/movus.subscriber.reliability': 'reliable'}],
+    #     output='screen'
+    # )
+
 
     return LaunchDescription(args + [OpaqueFunction(function=launch_setup)])
