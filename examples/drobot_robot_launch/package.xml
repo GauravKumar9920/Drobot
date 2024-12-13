@@ -3,6 +3,7 @@
   <name>drobot_robot_launch</name>
   <version>0.1.0</version>
   <description>A package that shows a demo to launch robot models.</description>
+  <maintainer email="gaurav.og.9920@gmail.com">Gaurav Kumar</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <export>

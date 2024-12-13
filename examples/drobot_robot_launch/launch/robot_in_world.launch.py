@@ -42,6 +42,9 @@ def launch_setup(context, *args, **kwargs):
     if verbose.perform(context) == "true":
         gz_args.append(" -v ")
 
+    object_name = LaunchConfiguration("object_name")
+    use_sim = LaunchConfiguration("use_sim")
+
     # Include the first launch file
     gz_sim_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -87,14 +90,33 @@ def launch_setup(context, *args, **kwargs):
             "use_ned_frame": use_ned_frame,
         }.items(),
     )
+    
+    # Include the third launch file with model name
+    model_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("drobot_object_models"),
+                        "launch",
+                        "upload_object.launch.py",
+                    ]
+                )
+            ]
+        ),
+        launch_arguments={
+            "object_name": object_name,
+            "use_sim": use_sim,
+        }.items(),
+    )
 
-    include = [gz_sim_launch, robot_launch]
+    include = [gz_sim_launch, robot_launch, model_launch]
 
     return include
 
 
 def generate_launch_description():
-
+    
     # Declare the launch arguments with default values
     args = [
         DeclareLaunchArgument(
@@ -171,6 +193,16 @@ def generate_launch_description():
             "use_ned_frame",
             default_value="false",
             description="Flag to indicate whether to use the north-east-down frame",
+        ),
+        DeclareLaunchArgument(
+            "object_name",
+            default_value="apriltag_block",
+            description="Name of the object model to load",
+        ),
+        DeclareLaunchArgument(
+            "use_sim",
+            default_value="true",
+            description="Flag to indicate whether to use simulation",
         ),
     ]
 

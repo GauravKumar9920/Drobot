@@ -3,6 +3,7 @@
   <name>drobot_demos</name>
   <version>0.1.0</version>
   <description>A package for demo launch files.</description>
+  <maintainer email="gaurav.og.9920@gmail.com">Gaurav Kumar</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <export>
