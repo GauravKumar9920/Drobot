@@ -10,6 +10,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     object_name = LaunchConfiguration("object_name")
     use_sim = LaunchConfiguration("use_sim")
+    z_block = LaunchConfiguration("z_block")
 
     args = [
         DeclareLaunchArgument(
@@ -21,6 +22,11 @@ def generate_launch_description():
             "use_sim",
             default_value="true",
             description="Flag to indicate whether to use simulation",
+        ),
+        DeclareLaunchArgument(
+            "z_block",
+            default_value="0.25",
+            description="Initial z position for apriltag_block",
         ),
     ]
 
@@ -36,7 +42,9 @@ def generate_launch_description():
     gz_spawner = Node(
         package="ros_gz_sim",
         executable="create",
-        arguments=["-name", object_name, "-file", description_file],
+        arguments=["-name", object_name, 
+                   "-file", description_file,
+                   "-z", z_block],
         output="both",
         condition=IfCondition(use_sim),
         parameters=[{"use_sim_time": use_sim}],

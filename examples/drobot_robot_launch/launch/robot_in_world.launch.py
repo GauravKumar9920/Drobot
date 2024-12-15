@@ -26,7 +26,7 @@ def launch_setup(context, *args, **kwargs):
     roll = LaunchConfiguration("roll")
     pitch = LaunchConfiguration("pitch")
     yaw = LaunchConfiguration("yaw")
-    # z_block = LaunchConfiguration("z_block")
+    z_block = LaunchConfiguration("z_block")
     use_ned_frame = LaunchConfiguration("use_ned_frame")
 
     if world_name.perform(context) != "empty.sdf":
@@ -118,7 +118,7 @@ def launch_setup(context, *args, **kwargs):
         launch_arguments={
             "object_name": object_name,
             "use_sim": use_sim,
-            # "z": z_block,
+            "z": z_block,
 
         }.items(),
     )
@@ -234,11 +234,11 @@ def generate_launch_description():
             default_value="apriltag_block",
             description="Name of the object model to load",
         ),
-        # DeclareLaunchArgument(
-        #     "z_block",
-        #     default_value="0.25",
-        #     description="Initial z position for apriltag_block",
-        # ),
+        DeclareLaunchArgument(
+            "z_block",
+            default_value="0.25",
+            description="Initial z position for apriltag_block",
+        ),
         DeclareLaunchArgument(
             "use_sim",
             default_value="true",
