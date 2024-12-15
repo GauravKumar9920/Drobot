@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
-project(rviz)
+project(drobot_rviz)
 
 # Find dependencies
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY drobot_rviz
+  DIRECTORY rviz
   DESTINATION share/${PROJECT_NAME}
 )
 

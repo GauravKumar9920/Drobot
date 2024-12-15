@@ -5,7 +5,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.conditions import IfCondition
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
-
+import os
 
 from launch_ros.actions import Node
 
@@ -26,6 +26,7 @@ def launch_setup(context, *args, **kwargs):
     roll = LaunchConfiguration("roll")
     pitch = LaunchConfiguration("pitch")
     yaw = LaunchConfiguration("yaw")
+    # z_block = LaunchConfiguration("z_block")
     use_ned_frame = LaunchConfiguration("use_ned_frame")
 
     if world_name.perform(context) != "empty.sdf":
@@ -63,6 +64,11 @@ def launch_setup(context, *args, **kwargs):
                 )
             ]
         ),
+        # DeclareLaunchArgument(
+        #     "rviz",
+        #     default_value="false",
+        #     description="Flag to enable RViz",
+        # ),
         launch_arguments=[
             ("gz_args", gz_args),
         ],
@@ -112,7 +118,19 @@ def launch_setup(context, *args, **kwargs):
         launch_arguments={
             "object_name": object_name,
             "use_sim": use_sim,
+            # "z": z_block,
+
         }.items(),
+    )
+    
+    # pkg_drobot_rviz = get_package_share_directory('drobot_rviz')
+    
+    # RViz
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        arguments=['-d', PathJoinSubstitution([FindPackageShare("drobot_rviz"), "rviz", "movus.rviz"])],
+        # condition=IfCondition(LaunchConfiguration('rviz', default='true'))
     )
     
     # Bridge
@@ -120,12 +138,14 @@ def launch_setup(context, *args, **kwargs):
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=['/model/movus/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
-                   '/model/movus/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',],
+                   '/model/movus/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
+                   '/camera/image@sensor_msgs/msg/Image@gz.msgs.Image',
+                   '/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo'],
         parameters=[{'qos_overrides./model/movus.subscriber.reliability': 'reliable'}],
         output='screen'
     )
 
-    include = [gz_sim_launch, robot_launch, model_launch, bridge]
+    include = [gz_sim_launch, robot_launch, model_launch, rviz, bridge]
 
     return include
 
@@ -201,7 +221,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             "yaw",
-            default_value="0.0",
+            default_value="3.14",
             description="Initial yaw angle",
         ),
         DeclareLaunchArgument(
@@ -214,22 +234,16 @@ def generate_launch_description():
             default_value="apriltag_block",
             description="Name of the object model to load",
         ),
+        # DeclareLaunchArgument(
+        #     "z_block",
+        #     default_value="0.25",
+        #     description="Initial z position for apriltag_block",
+        # ),
         DeclareLaunchArgument(
             "use_sim",
             default_value="true",
             description="Flag to indicate whether to use simulation",
         ),
     ]
-    
-    # # Bridge
-    # bridge = Node(
-    #     package='ros_gz_bridge',
-    #     executable='parameter_bridge',
-    #     arguments=['/model/movus/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
-    #                '/model/movus/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',],
-    #     parameters=[{'qos_overrides./model/movus.subscriber.reliability': 'reliable'}],
-    #     output='screen'
-    # )
-
 
     return LaunchDescription(args + [OpaqueFunction(function=launch_setup)])
