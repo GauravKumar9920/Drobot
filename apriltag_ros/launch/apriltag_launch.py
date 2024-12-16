@@ -14,7 +14,7 @@ def generate_launch_description():
 
     delcare_use_sim_time = DeclareLaunchArgument(
         name='use_sim_time',
-        default_value='false',
+        default_value='true',
         description='Use simulation (Gazebo) clock if true'
     )
 
