@@ -47,7 +47,7 @@ include_directories(
 # )
 
 install(
-  DIRECTORY launch
+  DIRECTORY launch src
   DESTINATION share/${PROJECT_NAME}
 )
 
@@ -56,10 +56,10 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-install(
-  TARGETS server client
-  DESTINATION lib/${PROJECT_NAME}
-)
+# install(
+#   TARGETS server client
+#   DESTINATION lib/${PROJECT_NAME}
+# )
 
 add_executable(server src/auto_dock_server.cpp src/find_apriltag.cpp)
 ament_target_dependencies(server ${server_dependencies})

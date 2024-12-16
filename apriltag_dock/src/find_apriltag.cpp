@@ -136,7 +136,7 @@ geometry_msgs::msg::Pose FindApriltag::getAvgPose()
 
     std::vector<std::pair<double, geometry_msgs::msg::Pose>> scans_with_deviation;
 
-    for (int i = 0; i < scans_.size(); ++i)
+    for (std::size_t i = 0; i < scans_.size(); ++i)
     {
         tf2::Vector3 position(scans_[i].position.x, scans_[i].position.y, scans_[i].position.z);
         tf2::Quaternion orientation(scans_[i].orientation.x, scans_[i].orientation.y, scans_[i].orientation.z, scans_[i].orientation.w);
