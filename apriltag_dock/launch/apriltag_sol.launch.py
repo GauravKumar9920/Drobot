@@ -151,7 +151,10 @@ def launch_setup(context, *args, **kwargs):
         arguments=['/model/movus/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
                    '/model/movus/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
                    '/camera/image@sensor_msgs/msg/Image@gz.msgs.Image',
-                   '/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo'],
+                   '/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+                   '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+                   '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/depth_image@sensor_msgs/msg/Image@gz.msgs.Image',
+                   '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/depth_image/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',],
         parameters=[{'qos_overrides./model/movus.subscriber.reliability': 'reliable'}],
         output='screen'
     )
@@ -202,7 +205,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             "namespace",
-            default_value="",
+            default_value="movus",
             description="Namespace",
         ),
         DeclareLaunchArgument(
@@ -247,7 +250,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             "z_block",
-            default_value="0.25",
+            default_value="0.35",
             description="Initial z position for apriltag_block",
         ),
         DeclareLaunchArgument(

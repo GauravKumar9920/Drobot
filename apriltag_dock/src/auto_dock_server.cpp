@@ -53,14 +53,27 @@ public:
         tf_buffer_ = std::make_unique<tf2_ros::Buffer>(this->get_clock());
         tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 
-        apriltag_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
-            "apriltag_approx_pose", rclcpp::SystemDefaultsQoS(),
-            [&](const geometry_msgs::msg::PoseStamped &msg)
-            {
-                RCLCPP_INFO(this->get_logger(), "Set AprilTag approximate pose.");
-                setApriltagPose(msg.pose, 'x');
-                apriltag_pose_set_ = true;
-            });
+        // apriltag_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
+        //     "apriltag_approx_pose", rclcpp::SystemDefaultsQoS(),
+        //     [&](const geometry_msgs::msg::PoseStamped &msg)
+        //     {
+        //         RCLCPP_INFO(this->get_logger(), "Set AprilTag approximate pose.");
+        //         setApriltagPose(msg.pose, 'x');
+        //         apriltag_pose_set_ = true;
+        //     });
+
+        geometry_msgs::msg::Pose zero_pose;
+        zero_pose.position.x = 0.0;
+        zero_pose.position.y = 0.0;
+        zero_pose.position.z = 0.0;
+
+        zero_pose.orientation.x = 0.0;
+        zero_pose.orientation.y = 0.0;
+        zero_pose.orientation.z = 0.0;
+        zero_pose.orientation.w = 1.0; // For a valid quaternion (normalized)
+
+        setApriltagPose(zero_pose, 'x');
+        apriltag_pose_set_ = true;
 
         auto_dock_action_server_ = std::make_shared<nav2_util::SimpleActionServer<AutoDock>>(
             this,

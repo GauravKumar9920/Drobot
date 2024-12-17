@@ -56,16 +56,16 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-# install(
-#   TARGETS server client
-#   DESTINATION lib/${PROJECT_NAME}
-# )
-
 add_executable(server src/auto_dock_server.cpp src/find_apriltag.cpp)
 ament_target_dependencies(server ${server_dependencies})
 
 add_executable(client src/auto_dock_client.cpp src/main.cpp)
 ament_target_dependencies(client ${client_dependencies})
+
+install(
+  TARGETS server client
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 # target_link_libraries(server ${server_dependencies})
 # target_link_libraries(client ${client_dependencies})

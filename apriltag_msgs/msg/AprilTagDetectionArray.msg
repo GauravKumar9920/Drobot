@@ -1,2 +1,2 @@
 std_msgs/Header header
-AprilTagDetection[] detections
+apriltag_msgs/AprilTagDetection[] detections

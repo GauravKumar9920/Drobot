@@ -27,10 +27,10 @@ def generate_launch_description():
             params_file,
             {'use_sim_time': use_sim_time}
         ],
-        remappings=[
-            ('/image_rect', '/camera/image_raw'),
-            ('/camera_info', '/camera/camera_info')
-        ]
+        # remappings=[
+        #     ('/camera/image', '/camera/image_raw'),
+        #     ('/camera_info', '/camera/camera_info')
+        # ]
     )
 
     return LaunchDescription([

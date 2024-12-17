@@ -8,7 +8,8 @@
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <scale>1 1 1</scale>
+            <scale>2 2 2</scale>
+            <!-- <scale>1 1 1</scale> -->
             <uri>meshes/apriltag_36h11_7.dae</uri>
           </mesh>
         </geometry>
@@ -18,6 +19,7 @@
         <geometry>
           <box>
             <size>0.2 0.5 0.5</size>
+            <!-- <size>0.1 5 0.1</size> -->
           </box>
         </geometry>
       </collision>

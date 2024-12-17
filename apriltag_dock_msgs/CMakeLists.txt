@@ -7,10 +7,14 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  action/AutoDock.action
+  "action/AutoDock.action"
+  DEPENDENCIES geometry_msgs # Add dependencies if any
 )
 
 if(BUILD_TESTING)
@@ -25,7 +29,16 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# Install message package.xml
+install(FILES
+  package.xml
+  DESTINATION share/${PROJECT_NAME}
+)
+
 ament_environment_hooks(
   "${CMAKE_CURRENT_SOURCE_DIR}/hooks/${PROJECT_NAME}.dsv.in")
+
+ament_export_dependencies(rosidl_default_runtime)
+ament_export_include_directories(include)
 
 ament_package()

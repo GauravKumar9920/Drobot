@@ -2,7 +2,7 @@
     ros__parameters:
         image_transport: raw    # image format
         family: 36h11           # tag family name apriltag_36h11_7
-        size: 0.16              # tag edge size in meter
+        size: 1.0              # tag edge size in meter
         max_hamming: 0          # maximum allowed hamming distance (corrected bits)
 
         # see "apriltag.h" 'struct apriltag_detector' for more documentation on these optional parameters
@@ -12,4 +12,4 @@
             blur: 0.0           # sigma of Gaussian blur for quad detection
             refine: true           # snap to strong gradients
             sharpening: 0.25    # sharpening of decoded images
-            debug: false            # write additional debugging images to current working directory
+            debug: false            # write additional debugging images to current working directoryye

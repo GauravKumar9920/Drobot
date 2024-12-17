@@ -1,7 +1,13 @@
-# request
+# goal
+# (Add a comment here to explicitly indicate no goal fields)
+
 ---
+
 # result
+# (Add a comment here to explicitly indicate no result fields)
+
 ---
+
 # feedback
 string state
 float64 distance_to_apriltag
