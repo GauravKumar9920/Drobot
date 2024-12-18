@@ -4,8 +4,8 @@ using namespace automatic_parking;
 
 void autodock_controller::handle_service(
     const std::shared_ptr < rmw_request_id_t >,
-    const std::shared_ptr < autodock_msgs::srv::Docking::Request > request,
-    std::shared_ptr < autodock_msgs::srv::Docking::Response >      response)
+    const std::shared_ptr < apriltag_dock_msgs::srv::Docking::Request > request,
+    std::shared_ptr < apriltag_dock_msgs::srv::Docking::Response >      response)
 {
     if (docking_state == "docked") set_docking_state("");
 
@@ -25,7 +25,7 @@ void autodock_controller::handle_service(
 
 void autodock_controller::state_publish()
 {
-    autodock_msgs::msg::CurrentState current_state;
+    apriltag_dock_msgs::msg::CurrentState current_state;
 
     current_state.docking_state = docking_state;
     current_state.action_state = action_state;

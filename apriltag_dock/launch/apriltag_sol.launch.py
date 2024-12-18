@@ -29,6 +29,7 @@ def launch_setup(context, *args, **kwargs):
     z_block = LaunchConfiguration("z_block")
     use_ned_frame = LaunchConfiguration("use_ned_frame")
     apriltag_share = get_package_share_directory('apriltag_ros')
+    config = os.path.join(get_package_share_directory('apriltag_dock'), 'param', 'movus.yaml') 
 
     if world_name.perform(context) != "empty.sdf":
         world_name = LaunchConfiguration("world_name").perform(context)
@@ -144,6 +145,13 @@ def launch_setup(context, *args, **kwargs):
         }.items()
     )
     
+    docking_node = Node(
+        package='apriltag_dock',
+        executable='controller',
+        name='autodock_controller',
+        output='screen',
+        parameters = [config])
+    
     # Bridge
     bridge = Node(
         package='ros_gz_bridge',
@@ -155,11 +163,12 @@ def launch_setup(context, *args, **kwargs):
                    '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
                    '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/depth_image@sensor_msgs/msg/Image@gz.msgs.Image',
                    '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/depth_image/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',],
+            
         parameters=[{'qos_overrides./model/movus.subscriber.reliability': 'reliable'}],
         output='screen'
     )
 
-    include = [gz_sim_launch, robot_launch, model_launch, rviz, bridge, apriltag_launch]
+    include = [gz_sim_launch, robot_launch, model_launch, rviz, bridge, docking_node, apriltag_launch]
 
     return include
 

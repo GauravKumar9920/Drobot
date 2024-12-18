@@ -14,7 +14,9 @@ find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/AutoDock.action"
-  DEPENDENCIES geometry_msgs # Add dependencies if any
+  "msg/CurrentState.msg"
+  "srv/Docking.srv"
+  DEPENDENCIES geometry_msgs 
 )
 
 if(BUILD_TESTING)

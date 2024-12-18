@@ -14,31 +14,33 @@ find_package(geometry_msgs REQUIRED)
 find_package(apriltag_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 find_package(builtin_interfaces REQUIRED)
-find_package(nav2_msgs REQUIRED)
-find_package(nav2_util REQUIRED)
+find_package(sensor_msgs REQUIRED)
+# find_package(nav2_msgs REQUIRED)
+# find_package(nav2_util REQUIRED)
 find_package(apriltag_dock_msgs REQUIRED)
 
-set(server_dependencies
-  rclcpp
-  rclcpp_action
-  geometry_msgs
-  apriltag_msgs
-  tf2_ros
-  tf2
-  nav2_msgs
-  nav2_util
-  apriltag_dock_msgs
-)
+# set(server_dependencies
+#   rclcpp
+#   rclcpp_action
+#   geometry_msgs
+#   apriltag_msgs
+#   tf2_ros
+#   tf2
+#   nav2_msgs
+#   nav2_util
+#   apriltag_dock_msgs
+# )
 
-set(client_dependencies
-  rclcpp
-  rclcpp_action
-  apriltag_dock_msgs
-)
+# set(client_dependencies
+#   rclcpp
+#   rclcpp_action
+#   apriltag_dock_msgs
+# )
 
 include_directories(
-  include
+  include/${PROJECT_NAME}
 )
 
 # install(
@@ -46,26 +48,45 @@ include_directories(
 #   DESTINATION share/apriltag_dock
 # )
 
-install(
-  DIRECTORY launch src
-  DESTINATION share/${PROJECT_NAME}
+# install(
+#   DIRECTORY launch src
+#   DESTINATION share/${PROJECT_NAME}
+# )
+
+# install(
+#   DIRECTORY include
+#   DESTINATION include/${PROJECT_NAME}
+# )
+
+# add_executable(server src/auto_dock_server.cpp src/find_apriltag.cpp)
+# ament_target_dependencies(server ${server_dependencies})
+
+# add_executable(client src/auto_dock_client.cpp src/main.cpp)
+# ament_target_dependencies(client ${client_dependencies})
+
+set(CTRL_EXEC_NAME "controller")
+set(CLIENT_EXEC_NAME "docking_client")
+add_executable( ${CTRL_EXEC_NAME} src/controller.cpp src/service_state.cpp)
+add_executable( ${CLIENT_EXEC_NAME} src/service_client_node.cpp)
+
+set(DEPENDENCIES
+  "rclcpp"           
+  "std_msgs"         
+  "geometry_msgs" 
+  "tf2_geometry_msgs"
+  "tf2"
+  "tf2_ros"
+  "sensor_msgs"
+  "apriltag_dock_msgs"
 )
 
-install(
-  DIRECTORY include
-  DESTINATION include/${PROJECT_NAME}
-)
+ament_target_dependencies(${CTRL_EXEC_NAME} ${DEPENDENCIES})
+ament_target_dependencies(${CLIENT_EXEC_NAME} ${DEPENDENCIES})
 
-add_executable(server src/auto_dock_server.cpp src/find_apriltag.cpp)
-ament_target_dependencies(server ${server_dependencies})
-
-add_executable(client src/auto_dock_client.cpp src/main.cpp)
-ament_target_dependencies(client ${client_dependencies})
-
-install(
-  TARGETS server client
-  DESTINATION lib/${PROJECT_NAME}
-)
+# install(
+#   TARGETS server client
+#   DESTINATION lib/${PROJECT_NAME}
+# )
 
 # target_link_libraries(server ${server_dependencies})
 # target_link_libraries(client ${client_dependencies})
@@ -81,6 +102,16 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+install(TARGETS ${CTRL_EXEC_NAME}
+  DESTINATION lib/${PROJECT_NAME})
+install(TARGETS ${CLIENT_EXEC_NAME}
+  DESTINATION lib/${PROJECT_NAME})
+  
+install(
+  DIRECTORY launch param rviz
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_environment_hooks(
   "${CMAKE_CURRENT_SOURCE_DIR}/hooks/${PROJECT_NAME}.dsv.in")
