@@ -86,7 +86,7 @@ ARG BRANCH="main"
 ARG ROS_DISTRO="jazzy"
 
 # Install ROS-Gazebo framework
-ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
+ADD https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/$BRANCH/\
 extras/ros-jazzy-binary-gz-harmonic-source-install.sh install.sh
 RUN bash install.sh
 
@@ -117,20 +117,20 @@ RUN apt-get update && apt-get install -y \
     /opt/venv/bin/pip install --no-cache-dir -U pip
 
 # Add and run the install script
-ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/main/extras/mavros-ubuntu-install.sh install.sh
+ADD https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/main/extras/mavros-ubuntu-install.sh install.sh
 RUN chmod +x install.sh && bash install.sh
 
 # Install mavros
-# ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
+# ADD https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/$BRANCH/\
 # extras/mavros-ubuntu-install.sh install.sh
 
-# ADD https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/main/extras/mavros-ubuntu-install.sh install.sh
+# ADD https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/main/extras/mavros-ubuntu-install.sh install.sh
 # RUN bash install.sh
 
 # Download the background image from GitHub raw content URL
 # hadolint ignore=DL3047
 RUN wget -O /usr/share/backgrounds/custom-background.png -q \
-https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
+https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/$BRANCH/\
 extras/background.png && \
     mv /usr/share/backgrounds/warty-final-ubuntu.png \
         /usr/share/backgrounds/warty-final-ubuntu.png.bak && \
@@ -141,13 +141,13 @@ extras/background.png && \
 
 # Install Ardupilot - Ardusub
 USER docker
-RUN wget -O /tmp/install.sh https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/extras/ardusub-ubuntu-install-local.sh
+RUN wget -O /tmp/install.sh https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/$BRANCH/extras/ardusub-ubuntu-install-local.sh
 RUN chmod +x /tmp/install.sh && bash /tmp/install.sh
 
 # Set up Drobot workspace
 ENV DROBOT_UNDERLAY=/home/$USER/drobot_ws
 WORKDIR $DROBOT_UNDERLAY/src
-RUN wget -O /home/$USER/drobot_ws/drobot.repos -q https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/$BRANCH/\
+RUN wget -O /home/$USER/drobot_ws/drobot.repos -q https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/$BRANCH/\
 extras/repos/drobot.$ROS_DISTRO.repos
 RUN vcs import --shallow --input "/home/$USER/drobot_ws/drobot.repos"
 

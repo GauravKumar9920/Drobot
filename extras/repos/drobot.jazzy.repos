@@ -11,5 +11,5 @@ repositories:
 
   Drobot:
     type: git
-    url: https://github.com/GauravKumar9920/Drobot.git
+    url: https://github.com/GauravKumar9920/drobot.git
     version: main

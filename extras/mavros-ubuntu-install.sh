@@ -19,7 +19,7 @@ export MAVROS_RELEASE=ros2
 export MAVLINK_RELEASE=release/rolling/mavlink
 mkdir -p "/opt/mavros/src" && cd "/opt/mavros" || exit
 vcs import --force --shallow --retry 0 \
-        --input "https://raw.githubusercontent.com/GauravKumar9920/Drobot/refs/heads/main/extras/repos/mavros.jazzy.repos" src
+        --input "https://raw.githubusercontent.com/GauravKumar9920/drobot/refs/heads/main/extras/repos/mavros.jazzy.repos" src
 
 # Install MAVROS dependencies
 apt update && apt install -y libasio-dev libtinyxml2-dev python3-dev \
