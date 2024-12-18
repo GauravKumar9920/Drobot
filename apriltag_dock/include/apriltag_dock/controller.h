@@ -52,6 +52,9 @@ namespace automatic_parking {
                 this->declare_parameter<std::string>("tag_frame" ,"dock_frame");
                 this->get_parameter("tag_frame" , tag_frame);
 
+                // tag_pose.header.frame_id = "camera_optical_link";
+                // tag_pose.child_frame_id = "apriltag";   
+
                 action_service = this->create_service<apriltag_dock_msgs::srv::Docking>(
                     "autodock_controller/docking_service", std::bind(&autodock_controller::handle_service, this, _1, _2, _3));
                 vel_pub = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 20);
@@ -61,7 +64,9 @@ namespace automatic_parking {
             }
             ~autodock_controller(){}
             void run();
-            void set_docking_state(std::string new_docking_state);
+            // (const std::string &new_docking_state)
+            void set_docking_state(const std::string &new_docking_state);
+            // void set_docking_state(std::string new_docking_state);
 
         private:
             rclcpp::Service<apriltag_dock_msgs::srv::Docking>::SharedPtr action_service;
@@ -72,7 +77,7 @@ namespace automatic_parking {
             geometry_msgs::msg::TransformStamped tf_odom ,tf_bot2dock, tf_dock2bot;
             
             void tags_callback();
-            void set_action_state(std::string new_action_state);
+            void set_action_state(const std::string &new_action_state);
             void fid2pos();
             void docking_state_manage();
             void blind_state_fun();
@@ -87,6 +92,7 @@ namespace automatic_parking {
             void action_state_manage();
             void transform_filter(geometry_msgs::msg::TransformStamped &tf_);
             void state_publish();
+            // geometry_msgs::msg::TransformStamped tag_pose;s
             void handle_service(
                 const std::shared_ptr<rmw_request_id_t> request_header,
                 const std::shared_ptr<apriltag_dock_msgs::srv::Docking::Request> request,

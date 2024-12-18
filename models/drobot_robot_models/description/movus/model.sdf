@@ -313,6 +313,26 @@
       filename="gz-sim-components"
       name="gz::sim::Componenets">
       </plugin> -->
+
+      <plugin
+          filename="gz-sim-pose-publisher-system"
+          name="gz::sim::systems::PosePublisher">
+          <publish_link_pose>true</publish_link_pose>
+          <publish_sensor_pose>true</publish_sensor_pose>
+          <publish_visual_pose>true</publish_visual_pose>
+          <publish_collision_pose>true</publish_collision_pose>
+          <publish_model_pose>true</publish_model_pose>
+          <publish_nested_model_pose>true</publish_nested_model_pose>
+          <update_frequency>100</update_frequency>
+          <static_publisher>true</static_publisher>
+      </plugin>
+
+      <plugin 
+      filename="TfPlugin"
+      name="apriltag_dock_plugins::TfPublisherPlugin">
+      
+      </plugin>
+      <!-- </plugin> -->
     
       
       <plugin

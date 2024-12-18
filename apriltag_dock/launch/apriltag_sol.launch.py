@@ -152,6 +152,13 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
         parameters = [config])
     
+    
+    # custom_plugin = Node(
+    #     package='apriltag_dock',
+    #     executable='tf_plugin',
+    #     name='custom_tf_plugin',
+    #     output='screen',)
+    
     # Bridge
     bridge = Node(
         package='ros_gz_bridge',
@@ -162,7 +169,8 @@ def launch_setup(context, *args, **kwargs):
                    '/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
                    '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
                    '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/depth_image@sensor_msgs/msg/Image@gz.msgs.Image',
-                   '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/depth_image/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',],
+                   '/world/empty/model/movus/link/camera_depth_frame/sensor/camera_with_intrinsics_tag/depth_image/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',
+                   '/model/movus/pose@geometry_msgs/msg/PoseArray@gz.msgs.Pose_V'],
             
         parameters=[{'qos_overrides./model/movus.subscriber.reliability': 'reliable'}],
         output='screen'
