@@ -250,7 +250,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             "z_block",
-            default_value="0.35",
+            default_value="1.00",
             description="Initial z position for apriltag_block",
         ),
         DeclareLaunchArgument(

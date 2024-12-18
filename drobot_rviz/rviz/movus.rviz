@@ -220,7 +220,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /front_camera/rgb
+        Value: /camera/image
       Value: true
   Enabled: true
   Global Options:
